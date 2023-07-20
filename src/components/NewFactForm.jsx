@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-key */
+import { useState } from "react";
 import "../style.css"
 
 const CATEGORIES = [
@@ -13,15 +14,25 @@ const CATEGORIES = [
 ];
 
 const NewFactForm = () => {
+  const [text,setText] = useState("");
+  const [source, setSource] = useState("");
+  const [category, setSCategory] =  useState("");
+  let textLength = text.length;
+
+  function handelSubmit(e){
+    e.preventDefault();
+    console.log(text, source, category);
+
+  }
     return (
         <>
-         <form className="fact-form">
-        <input type="text" placeholder="Share a fact with the world..." />
-        <span>200</span>
-        <input type="text" placeholder="Trustworthy source..." />
-        <select>
+         <form className="fact-form" onSubmit={handelSubmit}>
+        <input type="text" value = {text} onChange={(e)=> setText(e.target.value)} placeholder="Share a fact with the world..." />
+        <span>{(200 - textLength) > 0 ? 200  - textLength : alert("Limit is 200") }</span>
+        <input type="text" value = {source} onChange={(e)=> setSource(e.target.value)} placeholder="Trustworthy source..." />
+        <select value = {category} onChange={(e)=> setSCategory(e.target.value)}>
           <option value="">Choose category:</option>
-          {CATEGORIES.map(cat => <option value={cat.name}>{cat.name.toLocaleUpperCase()}</option>)}
+          {CATEGORIES.map(cat => <option key={cat.name} value={cat.name}>{cat.name.toLocaleUpperCase()}</option>)}
         </select>
         <button className="btn btn-large">Post</button>
       </form>   
