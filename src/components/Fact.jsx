@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "../style.css";
 const CATEGORIES = [
     { name: "technology", color: "#3b82f6" },
@@ -13,9 +14,9 @@ const Fact = ({ fact }) => {
     return (
         <>
           <li className="fact" key = {fact.id}>
-              <p>
+              <p> 
                 {fact.text}
-                <a className="source" href={fact.source} target="_blank"
+                <a className="source" href={fact.source} target="_blank" rel="noreferrer"
                   >(Source)</a>
               </p>
               <span className="tag"

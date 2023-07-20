@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import "../style.css"
-const Header = () => {
+const Header = ({ showFrom, setShowFrom}) => {
     return (
         <>
         <header className="header">
@@ -13,7 +14,8 @@ const Header = () => {
           <h1>What I Have Learned Today</h1>
         </div>
 
-        <button className="btn btn-large">Share a fact</button>
+        <button className="btn btn-large" onClick={() => setShowFrom((value) => !value)}>
+          {!showFrom ? "Share a fact" : "Close"}</button>
       </header> 
         </>
     );
