@@ -32,6 +32,7 @@ async function handleVote(columnName) {
         <>
           <li className="fact" key = {fact.id}>
               <p> 
+                {isDisputed ? <span className="disputed">[DISPUTED ⛔️]</span> : null}
                 {fact.text}
                 <a className="source" href={fact.source} target="_blank" rel="noreferrer"
                   >(Source)</a>

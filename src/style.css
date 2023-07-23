@@ -2,6 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color);
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-bar-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-bar-color);
+  border-radius: 20px;
+  border: 3px solid var(--scroll-bar-bg-color);
 }
 
 body {
@@ -28,6 +45,7 @@ body {
   display: grid;
   grid-template-columns: 250px 1fr;
   gap: 48px;
+  height: 75vh;
 }
 
 @media (max-width: 900px) {
@@ -43,7 +61,11 @@ body {
   align-items: center;
   gap: 16px;
 }
-
+.disputed{
+  color: red;
+  font-weight: 600;
+  margin: 1rem;
+}
 .Loading-txt{
   font-size: 32px;
   text-align: center;
@@ -62,9 +84,15 @@ h1 {
   line-height: 1;
   margin-top: 6px;
 }
-
+#root{
+  max-width: 1500px;
+  margin: 0 auto;
+}
 .category {
   margin-bottom: 16px;
+}
+section{
+  overflow: scroll;
 }
 
 .fact {
