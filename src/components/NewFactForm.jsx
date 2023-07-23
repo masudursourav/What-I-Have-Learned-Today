@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
 import "../style.css"
@@ -13,7 +14,19 @@ const CATEGORIES = [
   { name: "news", color: "#8b5cf6" },
 ];
 
-const NewFactForm = () => {
+function isValidHttpUrl(string) {
+  let url;
+  
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+
+const NewFactForm = ({ setFacts, setShowFrom }) => {
   const [text,setText] = useState("");
   const [source, setSource] = useState("");
   const [category, setSCategory] =  useState("");
@@ -21,7 +34,25 @@ const NewFactForm = () => {
 
   function handelSubmit(e){
     e.preventDefault();
-    console.log(text, source, category);
+    if(text && isValidHttpUrl(source) && category && textLength <= 200){
+      const newFact = {
+        id: Math.round(Math.random() * 1000000),
+        text,
+        source,
+        category,
+        votesInteresting: 0,
+        votesMindblowing: 0,
+        votesFalse: 0,
+        createdIn: new Date().getFullYear(),        
+      };
+      setFacts((facts) => [newFact, ...facts]);
+
+      setText("");
+      setSource("");
+      setSCategory("");
+
+      setShowFrom(false)
+    }   
 
   }
     return (
