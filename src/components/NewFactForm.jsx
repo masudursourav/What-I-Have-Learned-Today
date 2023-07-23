@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
 import "../style.css"
+import supabase from "../supabase";
 
 const CATEGORIES = [
   { name: "technology", color: "#3b82f6" },
@@ -32,20 +33,12 @@ const NewFactForm = ({ setFacts, setShowFrom }) => {
   const [category, setSCategory] =  useState("");
   let textLength = text.length;
 
-  function handelSubmit(e){
+  async function handelSubmit(e){
     e.preventDefault();
     if(text && isValidHttpUrl(source) && category && textLength <= 200){
-      const newFact = {
-        id: Math.round(Math.random() * 1000000),
-        text,
-        source,
-        category,
-        votesInteresting: 0,
-        votesMindblowing: 0,
-        votesFalse: 0,
-        createdIn: new Date().getFullYear(),        
-      };
-      setFacts((facts) => [newFact, ...facts]);
+
+      const{newFact,error} = await supabase.from("facts").insert([{text,source,category}]).select();
+      setFacts((facts) => [newFact[0], ...facts]);
 
       setText("");
       setSource("");

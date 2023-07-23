@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import "../style.css";
+import supabase from "../supabase";
 const CATEGORIES = [
     { name: "technology", color: "#3b82f6" },
     { name: "science", color: "#16a34a" },
@@ -10,7 +12,22 @@ const CATEGORIES = [
     { name: "history", color: "#f97316" },
     { name: "news", color: "#8b5cf6" },
   ];
-const Fact = ({ fact }) => {
+const Fact = ({ fact , setFacts }) => {
+  const isDisputed =
+  fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
+
+async function handleVote(columnName) {
+  const { data: updatedFact, error } = await supabase
+    .from('facts')
+    .update({ [columnName]: fact[columnName] + 1 })
+    .eq('id', fact.id)
+    .select();
+
+  if (!error)
+    setFacts((facts) =>
+      facts.map((f) => (f.id === fact.id ? updatedFact[0] : f))
+    );
+}
     return (
         <>
           <li className="fact" key = {fact.id}>
@@ -28,9 +45,9 @@ const Fact = ({ fact }) => {
              </span
               >
               <div className="vote-buttons">
-                <button>👍 {fact.votesInteresting}</button>
-                <button>🤯 {fact.votesMindblowing}</button>
-                <button>⛔️ {fact.votesFalse}</button>
+                <button onClick={()=>handleVote("votesInteresting")}>👍 {fact.votesInteresting}</button>
+                <button onClick={()=>handleVote("votesMindblowing")}>🤯 {fact.votesMindblowing}</button>
+                <button onClick={()=>handleVote("votesFalse")}>⛔️ {fact.votesFalse}</button>
               </div>
             </li>   
         </>
